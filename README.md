@@ -9056,6 +9056,283 @@ class EmotionalSupport:
 if __name__ == "__main__":
     rem_system = REMSystem()
     rem_system.run()
+import pyttsx3
+import speech_recognition as sr
 
-# --- End of the Script ---
+# Initialize text-to-speech engine
+engine = pyttsx3.init()
 
+# Set language options (e.g., English, Spanish)
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[0].id)  # Default voice (English)
+
+# Function to speak text
+def speak(text):
+    engine.say(text)
+    engine.runAndWait()
+
+# Speech-to-text function
+def listen():
+    recognizer = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening...")
+        audio = recognizer.listen(source)
+    try:
+        return recognizer.recognize_google(audio)
+    except sr.UnknownValueError:
+        return "Sorry, I didn't catch that."
+class DietPlanner:
+    def __init__(self, user_preferences):
+        self.user_preferences = user_preferences
+
+    def generate_meal_plan(self):
+        # Example: Generate meals based on dietary restrictions (vegan, gluten-free, etc.)
+        if self.user_preferences['diet'] == 'vegan':
+            return ['Vegan Stir-fry', 'Chickpea Salad', 'Tofu Scramble']
+        else:
+            return ['Chicken Salad', 'Grilled Fish', 'Protein Smoothie']
+
+class WorkoutPlanner:
+    def __init__(self, user_goal):
+        self.user_goal = user_goal
+
+    def generate_workout_plan(self):
+        if self.user_goal == 'muscle_gain':
+            return ['Deadlifts', 'Squats', 'Bench Press']
+        elif self.user_goal == 'fat_loss':
+            return ['HIIT Circuit', 'Running', 'Jump Rope']
+        else:
+            return ['Yoga', 'Stretching', 'Walking']
+from textblob import TextBlob
+
+def analyze_mood(text):
+    # Simple sentiment analysis to detect mood (positive, neutral, negative)
+    blob = TextBlob(text)
+    sentiment = blob.sentiment.polarity
+    if sentiment > 0.5:
+        return "positive"
+    elif sentiment < -0.5:
+        return "negative"
+    else:
+        return "neutral"
+
+# Mood feedback example
+def respond_to_mood(mood):
+    if mood == 'positive':
+        speak("I'm happy to hear you're feeling good!")
+    elif mood == 'negative':
+        speak("I'm here for you, let's take it easy today.")
+    else:
+        speak("I sense you're neutral. How can I assist you today?")
+class UserCustomization:
+    def __init__(self):
+        self.personality_mode = 'friendly'  # Default personality mode
+
+    def switch_personality(self, mode):
+        self.personality_mode = mode
+        if mode == 'professional':
+            speak("Got it, I'll keep things professional from now on.")
+        elif mode == 'motivational':
+            speak("Let's get you motivated! You've got this!")
+        else:
+            speak("Switching back to friendly mode!")
+import google_auth_oauthlib.flow
+import googleapiclient.discovery
+
+# Example function to get Google Calendar events
+def get_google_calendar_events():
+    # Placeholder logic to fetch Google Calendar events (authentication needed)
+    pass
+import tkinter as tk
+
+class MagicalCreature:
+    def __init__(self):
+        self.window = tk.Tk()
+        self.window.title("Magical Creature")
+
+    def show_creature(self):
+        # Placeholder for drawing a creature on screen (expand with animations)
+        creature_label = tk.Label(self.window, text="🦄", font=("Arial", 100))
+        creature_label.pack()
+
+    def react_to_command(self, command):
+        if "hello" in command:
+            self.show_creature()
+            speak("Hello! I am your magical guide!")
+class ProgressTracking:
+    def __init__(self, user_data):
+        self.user_data = user_data
+
+    def generate_monthly_summary(self):
+        # Example: Track monthly progress
+        completed_tasks = len(self.user_data['completed_tasks'])
+        progress = f"You've completed {completed_tasks} tasks this month."
+        return progress
+
+    def predictive_assistance(self):
+        # Example: Predict upcoming tasks based on patterns
+        return "I noticed you work out every morning at 7 AM, want to stick to that schedule?"
+# Setup all components
+voice_interface = VoiceInterface()
+diet_planner = DietPlanner(user_preferences={'diet': 'vegan'})
+workout_planner = WorkoutPlanner(user_goal='muscle_gain')
+emotional_state = EmotionalState()
+creature = MagicalCreature()
+progress_tracker = ProgressTracking(user_data={'completed_tasks': []})
+
+# Start interaction loop
+while True:
+    command = listen()  # Get user command via speech
+    if "meal plan" in command:
+        meal_plan = diet_planner.generate_meal_plan()
+        speak("Here's your meal plan: " + ", ".join(meal_plan))
+    elif "workout plan" in command:
+        workout_plan = workout_planner.generate_workout_plan()
+        speak("Here's your workout plan: " + ", ".join(workout_plan))
+    elif "how am I feeling" in command:
+        mood = emotional_state.analyze_mood(command)
+        respond_to_mood(mood)
+    elif "customize voice" in command:
+        user_choice = input("Choose voice mode: professional, friendly, motivational: ")
+import pyttsx3
+import speech_recognition as sr
+from textblob import TextBlob
+import tkinter as tk
+
+# Voice Interface Setup
+engine = pyttsx3.init()
+engine.setProperty('voice', engine.getProperty('voices')[0].id)
+
+def speak(text):
+    engine.say(text)
+    engine.runAndWait()
+
+# Speech-to-Text Setup
+def listen():
+    recognizer = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening...")
+        audio = recognizer.listen(source)
+    try:
+        return recognizer.recognize_google(audio)
+    except sr.UnknownValueError:
+        return "Sorry, I didn't catch that."
+
+# Emotion and Mood Analysis
+def analyze_mood(text):
+    blob = TextBlob(text)
+    sentiment = blob.sentiment.polarity
+    if sentiment > 0.5:
+        return "positive"
+    elif sentiment < -0.5:
+        return "negative"
+    else:
+        return "neutral"
+
+def respond_to_mood(mood):
+    if mood == 'positive':
+        speak("I'm happy to hear you're feeling good!")
+    elif mood == 'negative':
+        speak("I'm here for you, let's take it easy today.")
+    else:
+        speak("I sense you're neutral. How can I assist you today?")
+
+# Diet Planner
+class DietPlanner:
+    def __init__(self, user_preferences):
+        self.user_preferences = user_preferences
+
+    def generate_meal_plan(self):
+        if self.user_preferences['diet'] == 'vegan':
+            return ['Vegan Stir-fry', 'Chickpea Salad', 'Tofu Scramble']
+        else:
+            return ['Chicken Salad', 'Grilled Fish', 'Protein Smoothie']
+
+# Workout Planner
+class WorkoutPlanner:
+    def __init__(self, user_goal):
+        self.user_goal = user_goal
+
+    def generate_workout_plan(self):
+        if self.user_goal == 'muscle_gain':
+            return ['Deadlifts', 'Squats', 'Bench Press']
+        elif self.user_goal == 'fat_loss':
+            return ['HIIT Circuit', 'Running', 'Jump Rope']
+        else:
+            return ['Yoga', 'Stretching', 'Walking']
+
+# Customization for User Preferences
+class UserCustomization:
+    def __init__(self):
+        self.personality_mode = 'friendly'
+
+    def switch_personality(self, mode):
+        self.personality_mode = mode
+        if mode == 'professional':
+            speak("Got it, I'll keep things professional from now on.")
+        elif mode == 'motivational':
+            speak("Let's get you motivated! You've got this!")
+        else:
+            speak("Switching back to friendly mode!")
+
+# Magical Creature Animation
+class MagicalCreature:
+    def __init__(self):
+        self.window = tk.Tk()
+        self.window.title("Magical Creature")
+
+    def show_creature(self):
+        creature_label = tk.Label(self.window, text="🦄", font=("Arial", 100))
+        creature_label.pack()
+
+    def react_to_command(self, command):
+        if "hello" in command:
+            self.show_creature()
+            speak("Hello! I am your magical guide!")
+
+# Progress Tracker for Monthly Summaries
+class ProgressTracking:
+    def __init__(self, user_data):
+        self.user_data = user_data
+
+    def generate_monthly_summary(self):
+        completed_tasks = len(self.user_data['completed_tasks'])
+        progress = f"You've completed {completed_tasks} tasks this month."
+        return progress
+
+    def predictive_assistance(self):
+        return "I noticed you work out every morning at 7 AM, want to stick to that schedule?"
+
+# Start main interaction loop
+def main():
+    user_preferences = {'diet': 'vegan'}
+    user_goal = 'muscle_gain'
+    user_data = {'completed_tasks': []}
+
+    # Initialize all classes
+    diet_planner = DietPlanner(user_preferences)
+    workout_planner = WorkoutPlanner(user_goal)
+    emotional_state = 'positive'
+    customization = UserCustomization()
+    creature = MagicalCreature()
+    progress_tracker = ProgressTracking(user_data)
+
+    while True:
+        command = listen()
+        if "meal plan" in command:
+            meal_plan = diet_planner.generate_meal_plan()
+            speak(f"Here's your meal plan: {', '.join(meal_plan)}")
+        elif "workout plan" in command:
+            workout_plan = workout_planner.generate_workout_plan()
+            speak(f"Here's your workout plan: {', '.join(workout_plan)}")
+        elif "how am I feeling" in command:
+            mood = analyze_mood(command)
+            respond_to_mood(mood)
+        elif "customize voice" in command:
+            user_choice = input("Choose voice mode: professional, friendly, motivational: ")
+            customization.switch_personality(user_choice)
+        elif "show creature" in command:
+            creature.react_to_command(command)
+
+if __name__ == '__main__':
+    main()
